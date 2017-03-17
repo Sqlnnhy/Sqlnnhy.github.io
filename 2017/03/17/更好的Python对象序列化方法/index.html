@@ -1,0 +1,699 @@
+<!doctype html>
+
+
+
+  
+
+
+<html class="theme-next pisces use-motion" lang="zh-Hans">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+  
+  
+  
+  
+
+  
+    
+    
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+    
+    
+    <link href="//fonts.googleapis.com/css?family=Lato:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+  
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.0" rel="stylesheet" type="text/css" />
+
+
+  <meta name="keywords" content="Hexo, NexT" />
+
+
+
+
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=5.1.0" />
+
+
+
+
+
+
+<meta name="description" content="原文：Better Python Object Serialization
+
+Python标准库充满了蒙尘的宝石。其中一个允许基于参数类型的简单优雅的函数调度。这使得它对任意对象的序列化是完美的 —— 例如，web API和结构化日志的JSON化。
+谁没有看过它：
+12TypeError: datetime.datetime(...) is not JSON serializable
+虽然这应该不">
+<meta property="og:type" content="article">
+<meta property="og:title" content="更好的Python对象序列化方法">
+<meta property="og:url" content="https://lsqpyer.github.io/2017/03/17/更好的Python对象序列化方法/index.html">
+<meta property="og:site_name" content="尋覓">
+<meta property="og:description" content="原文：Better Python Object Serialization
+
+Python标准库充满了蒙尘的宝石。其中一个允许基于参数类型的简单优雅的函数调度。这使得它对任意对象的序列化是完美的 —— 例如，web API和结构化日志的JSON化。
+谁没有看过它：
+12TypeError: datetime.datetime(...) is not JSON serializable
+虽然这应该不">
+<meta property="og:updated_time" content="2017-03-17T02:52:43.528Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="更好的Python对象序列化方法">
+<meta name="twitter:description" content="原文：Better Python Object Serialization
+
+Python标准库充满了蒙尘的宝石。其中一个允许基于参数类型的简单优雅的函数调度。这使得它对任意对象的序列化是完美的 —— 例如，web API和结构化日志的JSON化。
+谁没有看过它：
+12TypeError: datetime.datetime(...) is not JSON serializable
+虽然这应该不">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Pisces',
+    sidebar: {"position":"left","display":"post","offset":12,"offset_float":0,"b2t":false,"scrollpercent":false},
+    fancybox: true,
+    motion: true,
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="https://lsqpyer.github.io/2017/03/17/更好的Python对象序列化方法/"/>
+
+
+
+
+
+  <title> 更好的Python对象序列化方法 | 尋覓 </title>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    
+  
+
+  <div class="container one-collumn sidebar-position-left page-post-detail ">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/"  class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">尋覓</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle"></p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            归档
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+    <link itemprop="mainEntityOfPage" href="https://lsqpyer.github.io/2017/03/17/更好的Python对象序列化方法/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="尋覓">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/header.bmp">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="尋覓">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                更好的Python对象序列化方法
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-03-17T10:52:43+08:00">
+                2017-03-17
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <p>原文：<a href="https://hynek.me/articles/serialization/" target="_blank" rel="external">Better Python Object Serialization</a></p>
+<hr>
+<p>Python标准库充满了蒙尘的宝石。其中一个允许基于参数类型的简单优雅的函数调度。这使得它对任意对象的序列化是完美的 —— 例如，web API和结构化日志的JSON化。</p>
+<p>谁没有看过它：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line"></div><div class="line">TypeError: datetime.datetime(...) <span class="keyword">is</span> <span class="keyword">not</span> JSON serializable</div></pre></td></tr></table></figure>
+<p>虽然这应该不是一个大问题，但是它是。<code>json</code>模块 —— 从<code>simplejson</code>继承了其API —— 提供了两种序列化对象的方法：</p>
+<ol>
+<li>实现一个<code>default()</code> <em>函数</em>，该函数接收一个对象，然后返回<a href="https://docs.python.org/3/library/json.html#json.JSONEncoder" target="_blank" rel="external"><code>JSONEncoder</code></a>能够理解的东东。</li>
+<li>自己实现或子类化<code>JSONEncoder</code>，然后将其当做<code>cls</code>传递给dump方法。你可以自己实现它，或者重载<code>JSONEncoder.default()</code> <em>方法</em>。</li>
+</ol>
+<p>而由于替代实现想要混进去，所以它们不同程度地模仿了<code>json</code>模块的API。[1]</p>
+<h2 id="可扩展性"><a href="#可扩展性" class="headerlink" title="可扩展性"></a>可扩展性</h2><p>这两种方法的共同点是，它们是不可扩展的：未提供新类型的添加支持。你单一的<code>default()</code>备用必须知道所有你想要序列化的类型。这意味着你要么写像这样的函数：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div></pre></td><td class="code"><pre><div class="line"></div><div class="line"><span class="function"><span class="keyword">def</span> <span class="title">to_serializable</span><span class="params">(val)</span>:</span></div><div class="line">    <span class="keyword">if</span> isinstance(val, datetime):</div><div class="line">        <span class="keyword">return</span> val.isoformat() + <span class="string">"Z"</span></div><div class="line">    <span class="keyword">elif</span> isinstance(val, enum.Enum):</div><div class="line">        <span class="keyword">return</span> val.value</div><div class="line">    <span class="keyword">elif</span> attr.has(val.__class__):</div><div class="line">        <span class="keyword">return</span> attr.asdict(val)</div><div class="line">    <span class="keyword">elif</span> isinstance(val, Exception):</div><div class="line">        <span class="keyword">return</span> &#123;</div><div class="line">            <span class="string">"error"</span>: val.__class__.__name__,</div><div class="line">            <span class="string">"args"</span>: val.args,</div><div class="line">        &#125;</div><div class="line">    <span class="keyword">return</span> str(val)</div></pre></td></tr></table></figure>
+<p>这很痛苦，因为你必须在同一个地方为所有对象添加序列化。[2]</p>
+<p>或者，你可以尝试自己拿出解决方案，就如Pyramid的JSON渲染器在<a href="http://docs.pylonsproject.org/projects/pyramid/en/latest/narr/renderers.html#using-the-add-adapter-method-of-a-custom-json-renderer" target="_blank" rel="external"><code>JSON.add_adapter</code></a>中做的那样，它使用了待在冷宫中的<code>zope.interface</code>的适配器注册表。[3]</p>
+<p>另一方面，Django使用了一个<code>DjangoJSONEncoder</code>来解决，这是<code>json.JSONEncoder</code>的一个子类，并且它知道如何解码日期、时间、UUID，并保证（可以）。但除此之外，你又要靠自己了。如果你想更进一步使用Django和web API，那么，反正你可能已经使用Django REST框架了。它们提出了一个完整的<a href="http://www.django-rest-framework.org/api-guide/serializers/" target="_blank" rel="external">序列化系统</a>，这个系统可不仅仅做了让数据准备好<code>json.dumps()</code>。</p>
+<p>最后，为了完整起见，我觉得我必须提一提自己在<a href="http://www.structlog.org/en/stable/" target="_blank" rel="external"><code>structlog</code></a>的解决方法，这一方法从一开始我就深深地讨厌：添加一个<code>__structlog__</code>方法到你的类中，它按照<code>__str__</code>返回一个序列化表示。请不要重蹈我的覆辙；标签 <a href="https://softwareclown.com" target="_blank" rel="external">软件小丑</a>。</p>
+<hr>
+<p>鉴于JSON相当普遍，令人惊讶的是，目前，我们只有孤立的解决方案。我个人希望的是，有一种方法，可以在一个地方统一注册序列器，但是以一种分散的方式，而无需对我的（或者更糟糕：第三方）类进行任何改变。</p>
+<h2 id="进入PEP-443"><a href="#进入PEP-443" class="headerlink" title="进入PEP 443"></a>进入PEP 443</h2><p>原来，对这个问题，Python 3.4想出了一个很好的解决方法，参见<a href="https://www.python.org/dev/peps/pep-0443/" target="_blank" rel="external">PEP 443</a>: <a href="https://docs.python.org/3/library/functools.html#functools.singledispatch" target="_blank" rel="external"><code>functools.singledispatch</code></a> (对于Python遗留版本，也可见<a href="https://pypi.org/project/singledispatch/" target="_blank" rel="external">PyPI</a>)。</p>
+<p>简单地说，定义一个默认的函数，然后基于第一个参数类型，注册该函数的额外版本：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div></pre></td><td class="code"><pre><div class="line"></div><div class="line"><span class="keyword">from</span> datetime <span class="keyword">import</span> datetime</div><div class="line"><span class="keyword">from</span> functools <span class="keyword">import</span> singledispatch</div><div class="line"></div><div class="line"><span class="meta">@singledispatch</span></div><div class="line"><span class="function"><span class="keyword">def</span> <span class="title">to_serializable</span><span class="params">(val)</span>:</span></div><div class="line">    <span class="string">"""Used by default."""</span></div><div class="line">    <span class="keyword">return</span> str(val)</div><div class="line">    </div><div class="line"><span class="meta">@to_serializable.register(datetime)</span></div><div class="line"><span class="function"><span class="keyword">def</span> <span class="title">ts_datetime</span><span class="params">(val)</span>:</span></div><div class="line">    <span class="string">"""Used if *val* is an instance of datetime."""</span></div><div class="line">    <span class="keyword">return</span> val.isoformat() + <span class="string">"Z"</span></div></pre></td></tr></table></figure>
+<p>现在，你也可以在<code>datetime</code>实例上调用<code>to_serializable()</code>，而单一的调度将选择正确的函数：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line"></div><div class="line"><span class="meta">&gt;&gt;&gt; </span>json.dumps(&#123;<span class="string">"msg"</span>: <span class="string">"hi"</span>, <span class="string">"ts"</span>: datetime.now()&#125;,</div><div class="line"><span class="meta">... </span>           default=to_serializable)</div><div class="line"><span class="string">'&#123;"ts": "2016-08-20T13:08:59.153864Z", "msg": "hi"&#125;'</span></div></pre></td></tr></table></figure>
+<p>这给了你将你的序列器改造成你所想要的权力：和类一起，在一个单独的模块，或者和JSON相关的代码放在一起？任君选择！但是你的<em>类</em>保持干净，你的项目之间没有庞大的<code>if-elif-else</code>分支。</p>
+<h2 id="更进一步"><a href="#更进一步" class="headerlink" title="更进一步"></a>更进一步</h2><p>显然，<code>@singledispatch</code>的适用范围不仅是JSON。一般的绑定不同行为到不同类型上 ，以及特别的对象序列化是普遍有用的[4]。我的一些校对人员提到，他们使用在可调用对象上使用类的<code>dict</code>，尝试了贫民窟近似和其他类似的暴行。(Ele注，原文是“Some of my proofreaders mentioned they tried a ghetto approximation using dicts of classes to callables and other similar atrocities.”。有更好的翻译，欢迎贡献~~)</p>
+<p>换句话说，<code>@singledispatch</code>只可能是那个你一直想要的函数，虽然它一直都在。</p>
+<p>P.S. 当然，在<a href="https://pypi.org/project/multipledispatch/" target="_blank" rel="external">PyPI</a>上，还有一个<code>*multiple*dispatch</code>。</p>
+<h2 id="脚注"><a href="#脚注" class="headerlink" title="脚注"></a>脚注</h2><hr>
+<ol>
+<li>然而，有个流行的替代实现：<a href="https://github.com/esnme/ultrajson" target="_blank" rel="external">UltraJSON</a>完全不支持自定义对象序列化，而<a href="https://github.com/kenrobbins/python-rapidjson" target="_blank" rel="external"><code>python-rapidjson</code></a>只支持<code>default()</code>函数。</li>
+<li>虽然你可以看到，使用<code>attrs</code>可管理；也许<a href="https://glyph.twistedmatrix.com/2016/08/attrs.html" target="_blank" rel="external">你应该使用<code>attrs</code></a>! </li>
+<li>不幸的是，在从<a href="https://docs.zope.org/zope.component/" target="_blank" rel="external"><code>zope.component</code></a>移植过来后，当前API Pyramid的使用是<a href="https://github.com/zopefoundation/zope.interface/issues/41" target="_blank" rel="external">无正式文档的</a>。</li>
+<li>有人告诉我，添加单一调度到标准库的原始动力是<a href="https://docs.python.org/3.5/library/pprint.html" target="_blank" rel="external"><code>pprint</code></a> 的一个更加优雅的重新实现(从未发生过)。</li>
+</ol>
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <footer class="post-footer">
+      
+
+      
+        
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2017/03/17/为部署Python web应用程序构建一个更好的用户体验/" rel="next" title="为部署Python web应用程序构建一个更好的用户体验">
+                <i class="fa fa-chevron-left"></i> 为部署Python web应用程序构建一个更好的用户体验
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2017/03/17/惯用Python：布尔表达式/" rel="prev" title="惯用Python：布尔表达式">
+                惯用Python：布尔表达式 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+          
+          </div>
+          
+
+
+          
+  <div class="comments" id="comments">
+    
+  </div>
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          <img class="site-author-image" itemprop="image"
+               src="/header.bmp"
+               alt="尋覓" />
+          <p class="site-author-name" itemprop="name">尋覓</p>
+           
+              <p class="site-description motion-element" itemprop="description">尋覓</p>
+          
+        </div>
+        <nav class="site-state motion-element">
+
+          
+            <div class="site-state-item site-state-posts">
+              <a href="/archives">
+                <span class="site-state-item-count">8</span>
+                <span class="site-state-item-name">日志</span>
+              </a>
+            </div>
+          
+
+          
+
+          
+
+        </nav>
+
+        
+
+        <div class="links-of-author motion-element">
+          
+        </div>
+
+        
+        
+
+        
+        
+
+        
+
+
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#可扩展性"><span class="nav-number">1.</span> <span class="nav-text">可扩展性</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#进入PEP-443"><span class="nav-number">2.</span> <span class="nav-text">进入PEP 443</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#更进一步"><span class="nav-number">3.</span> <span class="nav-text">更进一步</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#脚注"><span class="nav-number">4.</span> <span class="nav-text">脚注</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright" >
+  
+  &copy; 
+  <span itemprop="copyrightYear">2017</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">尋覓</span>
+</div>
+
+
+<div class="powered-by">
+  由 <a class="theme-link" href="https://hexo.io">Hexo</a> 强力驱动
+</div>
+
+<div class="theme-info">
+  主题 -
+  <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">
+    NexT.Pisces
+  </a>
+</div>
+
+
+        
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+    
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+  
+  <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+
+  
+  <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.0"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.0"></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="/js/src/affix.js?v=5.1.0"></script>
+
+  <script type="text/javascript" src="/js/src/schemes/pisces.js?v=5.1.0"></script>
+
+
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.0"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.0"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.0"></script>
+
+
+
+  
+
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+  
+  
+
+  
+
+  
+
+  
+
+  
+
+
+  
+
+</body>
+</html>

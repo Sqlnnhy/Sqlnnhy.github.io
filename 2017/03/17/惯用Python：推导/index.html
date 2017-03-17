@@ -1,0 +1,659 @@
+<!doctype html>
+
+
+
+  
+
+
+<html class="theme-next pisces use-motion" lang="zh-Hans">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+  
+  
+  
+  
+
+  
+    
+    
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+    
+    
+    <link href="//fonts.googleapis.com/css?family=Lato:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+  
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.0" rel="stylesheet" type="text/css" />
+
+
+  <meta name="keywords" content="Hexo, NexT" />
+
+
+
+
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=5.1.0" />
+
+
+
+
+
+
+<meta name="description" content="原文：Idiomatic Python: comprehensions
+
+很幸运，我们组有几个人已经用Python编程了相当长的一段时间（我自己现在已经使用这门语言超过15年了）。随着时间的推移，我们纷纷使用各种各样Python编程中的惯用手法，这些惯用手法可能不是很明显，或者处于各种原因并未广为人知。为了帮助大家分享一些这方面的知识，我们计划进行题为“地道的Python”的不定期的博客文章，在这">
+<meta property="og:type" content="article">
+<meta property="og:title" content="惯用Python：推导">
+<meta property="og:url" content="https://lsqpyer.github.io/2017/03/17/惯用Python：推导/index.html">
+<meta property="og:site_name" content="尋覓">
+<meta property="og:description" content="原文：Idiomatic Python: comprehensions
+
+很幸运，我们组有几个人已经用Python编程了相当长的一段时间（我自己现在已经使用这门语言超过15年了）。随着时间的推移，我们纷纷使用各种各样Python编程中的惯用手法，这些惯用手法可能不是很明显，或者处于各种原因并未广为人知。为了帮助大家分享一些这方面的知识，我们计划进行题为“地道的Python”的不定期的博客文章，在这">
+<meta property="og:updated_time" content="2017-03-17T02:54:11.414Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="惯用Python：推导">
+<meta name="twitter:description" content="原文：Idiomatic Python: comprehensions
+
+很幸运，我们组有几个人已经用Python编程了相当长的一段时间（我自己现在已经使用这门语言超过15年了）。随着时间的推移，我们纷纷使用各种各样Python编程中的惯用手法，这些惯用手法可能不是很明显，或者处于各种原因并未广为人知。为了帮助大家分享一些这方面的知识，我们计划进行题为“地道的Python”的不定期的博客文章，在这">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Pisces',
+    sidebar: {"position":"left","display":"post","offset":12,"offset_float":0,"b2t":false,"scrollpercent":false},
+    fancybox: true,
+    motion: true,
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="https://lsqpyer.github.io/2017/03/17/惯用Python：推导/"/>
+
+
+
+
+
+  <title> 惯用Python：推导 | 尋覓 </title>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    
+  
+
+  <div class="container one-collumn sidebar-position-left page-post-detail ">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/"  class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">尋覓</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle"></p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            归档
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+    <link itemprop="mainEntityOfPage" href="https://lsqpyer.github.io/2017/03/17/惯用Python：推导/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="尋覓">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/header.bmp">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="尋覓">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                惯用Python：推导
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-03-17T10:54:11+08:00">
+                2017-03-17
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <p>原文：<a href="https://blogs.msdn.microsoft.com/pythonengineering/2016/03/14/idiomatic-python-comprehensions/" target="_blank" rel="external">Idiomatic Python: comprehensions</a></p>
+<hr>
+<p>很幸运，我们组有几个人已经用Python编程了相当长的一段时间（我自己现在已经使用这门语言超过15年了）。随着时间的推移，我们纷纷使用各种各样Python编程中的惯用手法，这些惯用手法可能不是很明显，或者处于各种原因并未广为人知。为了帮助大家分享一些这方面的知识，我们计划进行题为“地道的Python”的不定期的博客文章，在这里，我们选择一个主题，并提供关于它的一些小技巧。有些文章可能很长，有些则可能很短。无论哪种方式，我们都希望，你能从中得到一些有用的东西（即使是对于经验丰富的开发人员而言，因为我们可能会在这里那里讲到一点Python历史）。</p>
+<p>对于该系列的首篇文字，我想我们可以谈谈推导。在几乎所有的编程语言中，填充一个容器的一个惯用手法就是使用<code>for</code>循环：</p>
+<figure class="highlight py"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">container = []</div><div class="line"><span class="keyword">for</span> x <span class="keyword">in</span> another_container:</div><div class="line">  container.append(x**<span class="number">2</span>)</div></pre></td></tr></table></figure>
+<p>这是用一些对象填充诸如列表的容器的一种非常简单直接的方式。但是，这种惯用手法相当常见，以至于一遍又一遍的重复变成有点讨厌。这就是为什么在Python 2.0中，<a href="https://docs.python.org/3/glossary.html#term-list-comprehension" target="_blank" rel="external">列表推导</a>被<a href="https://docs.python.org/3/whatsnew/2.0.html#list-comprehensions" target="_blank" rel="external">添加到了Python中</a>:</p>
+<figure class="highlight py"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">container = [x**<span class="number">2</span> <span class="keyword">for</span> x <span class="keyword">in</span> another_container]</div></pre></td></tr></table></figure>
+<p>(小历史：Python中的列表推导是受<a href="https://wiki.haskell.org/List_comprehension" target="_blank" rel="external">Haskell中的列表推导</a>所启发的)。列表推导已被广泛用于Python社区，因为它们提供了一种以紧凑的方式来从另一个容器中创建一个列表的简单的方式(技术上来讲，是从另一个<a href="https://docs.python.org/3/glossary.html#term-iterable" target="_blank" rel="external">可迭代对象</a>，但是每种类型的容器都应该是一个可迭代对象)。得益于Python在背后暗戳戳做的一些事，列表推导也快于一个简单的<code>for</code>循环。</p>
+<p>但你可能不知道的是，Python中还有生成器、字典和集合的推导版本。在Python 2.4中，<a href="https://docs.python.org/3/glossary.html#term-generator-expression" target="_blank" rel="external">生成器表达式</a>被<a href="https://docs.python.org/3/whatsnew/2.4.html#pep-289-generator-expressions" target="_blank" rel="external">添加到了Python中</a>。当你想通过不在内存中一次性创建一个完整的列表来节省内存，而只是想要使用需要的内存来一次创建序列中的一个项时（谁不想节省内存呢？），生成器和列表推导、生成器表达式的交叉使用是很棒的：</p>
+<figure class="highlight py"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">container = (x**<span class="number">2</span> <span class="keyword">for</span> x <span class="keyword">in</span> another_container)</div></pre></td></tr></table></figure>
+<p>就像列表推导，生成器表达式或多或少是下面的语法糖：</p>
+<figure class="highlight py"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">def</span> <span class="title">_</span><span class="params">()</span>:</span></div><div class="line">    <span class="keyword">for</span> x <span class="keyword">in</span> another_container:</div><div class="line">        <span class="keyword">yield</span> x**<span class="number">2</span></div><div class="line">container = _()</div><div class="line"><span class="keyword">del</span> _</div></pre></td></tr></table></figure>
+<p>要真正了解这一点，你可以分别尝试下面的两个例子，但要注意，后者将需要一段时间才能完成：</p>
+<figure class="highlight py"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line"><span class="comment"># Use xrange() instead of range() if you're using Python 2.7.</span></div><div class="line"><span class="comment"># Generator expression</span></div><div class="line">(<span class="string">'genexp'</span> <span class="keyword">for</span> _ <span class="keyword">in</span> range(<span class="number">100000000</span>))</div><div class="line"><span class="comment"># List comprehension</span></div><div class="line">[<span class="string">'listcomp'</span> <span class="keyword">for</span> _ <span class="keyword">in</span> range(<span class="number">100000000</span>)]</div></pre></td></tr></table></figure>
+<p>每当你使用列表推导的时候，你应该停下来想想结果列表将如何被使用。如果该列表只是被当做一个<a href="https://docs.python.org/3/glossary.html#term-iterable" target="_blank" rel="external">可迭代对象</a> — 列表中的所有对象将被依次访问，正如在<code>for</code>循环中一样 — 那么你应该使用一个生成器表达式即可。</p>
+<p>这也过渡到了这个惯用手法：在有可能的时候，指定你的API接受或返回一个可迭代对象，而不是一个指定的类型，例如一个列表。当你只关心一个对象序列时，指定你的API接受/返回可迭代对象，而不是一个具体的类型，例如一个列表。这一点与列表推导如何在Python 3中工作的很好的联系在一起，因为基本上生成器表达式加上对<code>list()</code>的调用，意味着返回一个可迭代对象，例如生成器表达式，并不会阻碍你的代码的用户轻松的获得一个列表，如果列表就是他们想要的话：</p>
+<figure class="highlight py"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">container = list(x**<span class="number">2</span> <span class="keyword">for</span> x <span class="keyword">in</span> another_container)</div></pre></td></tr></table></figure>
+<p>列表推导和生成器表达式变得如此受欢迎，以至于Python继续发展推导的概念，并<a href="https://docs.python.org/3/whatsnew/3.0.html#new-syntax" target="_blank" rel="external">在Python 3.0中引入了字典和集合推导</a> (它们被<a href="https://docs.python.org/3/whatsnew/2.7.html#python-3-1-features" target="_blank" rel="external">反向移植到Python 2.7</a>)。顾名思义，字典和集合推导提供了从<code>for</code>循环创建字典和集合的语法糖。集合推导看起来像是一个生成器表达式，但它使用的是花括号：</p>
+<figure class="highlight py"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">container = &#123;x**<span class="number">2</span> <span class="keyword">for</span> x <span class="keyword">in</span> another_container&#125;</div></pre></td></tr></table></figure>
+<p>字典推导看起来像集合推导，但字典中的每一项使用冒号来分开键值，就像在字典中一样：</p>
+<figure class="highlight py"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">container = &#123;x: x**<span class="number">2</span> <span class="keyword">for</span> x <span class="keyword">in</span> another_container&#125;</div></pre></td></tr></table></figure>
+<p>现在，你可能已经注意到了在所有Python内置的容器类型中，只有元组没有推导形式。这是故意的，因为推导并不意味着只是<code>for</code>循环的语法糖。由于你不能在一个<code>for</code>循环中创建一个元组，因此元组的推导形式是没有意义的。同时，很容易根据一个生成器表达式来创建一个元组，因此这并没有丢失掉任何功能，并且与使用<code>for</code>循环来创建一个列表，然后最后将其转换成一个元组相比，并没有任何性能损失：</p>
+<figure class="highlight py"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">container = tuple(x**<span class="number">2</span> <span class="keyword">for</span> x <span class="keyword">in</span> another_container)</div></pre></td></tr></table></figure>
+<p>总结一下：</p>
+<ul>
+<li>列表推导是受Haskell所启发的： <code>[x**2 for x in another_container]</code></li>
+<li>生成器表达式就像列表推导一样，但它用于生成器：<code>(x**2 for x in another_container)</code></li>
+<li>你应该总是尝试使用生成器表达式，而不是列表推导，并且只在你确实需要一个列表的时候使用列表推导</li>
+<li>当你只关心对象序列时，指定你的API接受/返回可迭代对象，而不是具体的类型，例如，列表。</li>
+<li>Python 2.7/3.0添加了集合推导：<code>{x**2 for x in another_container}</code></li>
+<li>Python 2.7/3.0还添加了字典推导：<code>{x: x**2 for x in another_container}</code></li>
+</ul>
+<p>希望你觉得这篇文章有用！如果是的话，请告诉我们，以便我们能够衡量是否应该在未来写更多像这样的文章。（Ele注：请拉到文章开头，找到原文地址，去反馈吧！）</p>
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <footer class="post-footer">
+      
+
+      
+        
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2017/03/17/惯用Python：布尔表达式/" rel="next" title="惯用Python：布尔表达式">
+                <i class="fa fa-chevron-left"></i> 惯用Python：布尔表达式
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+          
+          </div>
+          
+
+
+          
+  <div class="comments" id="comments">
+    
+  </div>
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+
+      
+
+      <section class="site-overview sidebar-panel sidebar-panel-active">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          <img class="site-author-image" itemprop="image"
+               src="/header.bmp"
+               alt="尋覓" />
+          <p class="site-author-name" itemprop="name">尋覓</p>
+           
+              <p class="site-description motion-element" itemprop="description">尋覓</p>
+          
+        </div>
+        <nav class="site-state motion-element">
+
+          
+            <div class="site-state-item site-state-posts">
+              <a href="/archives">
+                <span class="site-state-item-count">8</span>
+                <span class="site-state-item-name">日志</span>
+              </a>
+            </div>
+          
+
+          
+
+          
+
+        </nav>
+
+        
+
+        <div class="links-of-author motion-element">
+          
+        </div>
+
+        
+        
+
+        
+        
+
+        
+
+
+      </section>
+
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright" >
+  
+  &copy; 
+  <span itemprop="copyrightYear">2017</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">尋覓</span>
+</div>
+
+
+<div class="powered-by">
+  由 <a class="theme-link" href="https://hexo.io">Hexo</a> 强力驱动
+</div>
+
+<div class="theme-info">
+  主题 -
+  <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">
+    NexT.Pisces
+  </a>
+</div>
+
+
+        
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+    
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+  
+  <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+
+  
+  <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.0"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.0"></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="/js/src/affix.js?v=5.1.0"></script>
+
+  <script type="text/javascript" src="/js/src/schemes/pisces.js?v=5.1.0"></script>
+
+
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.0"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.0"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.0"></script>
+
+
+
+  
+
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+  
+  
+
+  
+
+  
+
+  
+
+  
+
+
+  
+
+</body>
+</html>
