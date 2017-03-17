@@ -97,7 +97,7 @@
 <meta property="og:description" content="原文：Building a better user experience for deploying Python web applications.
 
 我又一次错过了一个在PyCon US谈话的机会。我想谈的题目与这篇博客文章是一样的。由于它不被接受，所以我想我可能会转而使用一篇博文来一瞥我一直在做的Python Web应用程序部署的最近的工作，而如果它被接受，我本来会在我的谈话中描述一下相关内">
-<meta property="og:updated_time" content="2017-03-17T02:51:42.053Z">
+<meta property="og:updated_time" content="2017-03-17T03:04:00.370Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="为部署Python web应用程序构建一个更好的用户体验">
 <meta name="twitter:description" content="原文：Building a better user experience for deploying Python web applications.
@@ -320,6 +320,7 @@
         <p>原文：<a href="http://blog.dscpl.com.au/2016/02/building-better-user-experience-for.html" target="_blank" rel="external">Building a better user experience for deploying Python web applications.</a></p>
 <hr>
 <p>我又一次错过了一个在PyCon US谈话的机会。我想谈的题目与这篇博客文章是一样的。由于它不被接受，所以我想我可能会转而使用一篇博文来一瞥我一直在做的Python Web应用程序部署的最近的工作，而如果它被接受，我本来会在我的谈话中描述一下相关内容。</p>
+<a id="more"></a>
 <p>对于那些可能已经跟随我在过去一直在做的，使用Apache和mod_wsgi来为运行着的Python web应用程序创建和运用Docker图像的人，这是工作的进展，扩大范围，并使它在Docker容器外可用。</p>
 <h1 id="使用Django示范"><a href="#使用Django示范" class="headerlink" title="使用Django示范"></a>使用Django示范</h1><p>为了说明这是怎么一回事，下面是一个简单的演示。其中，创建了一个新的Django web应用程序项目，并让它运行。<br><figure class="highlight py"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div></pre></td><td class="code"><pre><div class="line">&gt; $ django-admin startproject mydjangosite</div><div class="line">&gt; $ cd mydjangosite/</div><div class="line">&gt; $ python manage.py runserver</div><div class="line">&gt; Performing system checks...</div><div class="line">&gt; System check identified no issues (<span class="number">0</span> silenced).</div><div class="line">&gt; You have unapplied migrations; your app may <span class="keyword">not</span> work properly until they are applied.</div><div class="line">&gt; Run <span class="string">'python manage.py migrate'</span> to apply them.</div><div class="line">&gt; February <span class="number">18</span>, <span class="number">2016</span> - <span class="number">01</span>:<span class="number">22</span>:<span class="number">25</span></div><div class="line">&gt; Django version <span class="number">1.9</span><span class="number">.2</span>, using settings <span class="string">'mydjangosite.settings'</span></div><div class="line">&gt; Starting development server at http://<span class="number">127.0</span><span class="number">.0</span><span class="number">.1</span>:<span class="number">8000</span>/</div><div class="line">&gt; Quit the server <span class="keyword">with</span> CONTROL-C.</div></pre></td></tr></table></figure></p>
 <p>这里没有什么特别的，而如果我们访问URL“<a href="http://127.0.0.1:8000/admin”，我们将看到Django管理界面的登录页面。由于我们使用的是内置Django开发服务器，所以登录页面的样式看起来正确的，因为开发服务器自动处理静态文件资产，例如样式表。" target="_blank" rel="external">http://127.0.0.1:8000/admin”，我们将看到Django管理界面的登录页面。由于我们使用的是内置Django开发服务器，所以登录页面的样式看起来正确的，因为开发服务器自动处理静态文件资产，例如样式表。</a></p>
@@ -499,7 +500,7 @@
           
             <div class="site-state-item site-state-posts">
               <a href="/archives">
-                <span class="site-state-item-count">8</span>
+                <span class="site-state-item-count">7</span>
                 <span class="site-state-item-name">日志</span>
               </a>
             </div>

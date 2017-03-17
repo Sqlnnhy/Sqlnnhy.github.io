@@ -97,7 +97,7 @@
 <meta property="og:description" content="原文：What problem does it solve?
 
 对于Python新手来说，Python较令人费解的方面之一就是，当涉及到编写HTTP(S)协议客户端时，标准库的urllib模块和流行的（及备受推崇的）第三方模块requests之间鲜明的可用性差异。当你的问题是“与HTTP服务器进行通信”时，可用性方面的差异并不是那么明显，但一涉及到额外的需求，像SSL/TLS、鉴权、重定向处理、会">
-<meta property="og:updated_time" content="2017-03-17T02:51:00.660Z">
+<meta property="og:updated_time" content="2017-03-17T03:02:51.277Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Requests vs. urllib：它解决了什么问题？">
 <meta name="twitter:description" content="原文：What problem does it solve?
@@ -320,6 +320,7 @@
         <p>原文：<a href="http://www.curiousefficiency.org/posts/2016/08/what-problem-does-it-solve.html" target="_blank" rel="external">What problem does it solve?</a></p>
 <hr>
 <p>对于Python新手来说，Python较令人费解的方面之一就是，当涉及到编写HTTP(S)协议客户端时，标准库的<code>urllib</code>模块和流行的（及备受推崇的）第三方模块<code>requests</code>之间鲜明的可用性差异。当你的问题是“与HTTP服务器进行通信”时，可用性方面的差异并不是那么明显，但一涉及到额外的需求，像SSL/TLS、鉴权、重定向处理、会话管理和JSON请求/响应主题，差异就明显起来。</p>
+<a id="more"></a>
 <p>想要<a href="http://noamelf.com/2016/08/05/designing-pythonic-apis/" target="_blank" rel="external">记录易用性的差异</a>是诱人而完全可以理解的，直到<code>requests</code>是”Pythonic” (在2016年), 而<code>urllib</code>现在已经不Pythonic了 (尽管被包含在了标准库中)。</p>
 <p>虽然当然有那么点因素(例如，内置的<code>property</code>是在Python 2.2才添加进来的，而<code>urllib2</code>被包含在原始的Python 2.0发布中，因此在其API设计中无法考虑这点)，但是绝大多数的可用性差异涉及到了我们经常忘记问问所使用的软件的一个完全不同的问题：<em>它解决了什么问题？</em></p>
 <p>即，<code>urllib</code>/<code>urllib2</code>和<code>requests</code>之间的许多令人惊讶的其他差异可以由它们<em>解决不同的问题</em>这一事实，以及较之于Jeremy Hylton在十年前想要解决的问题，现今大多数HTTP客户端开发者所遇到的问题更接近于Kenneth Reitz在2010/2011年设计<code>requests</code>用以解决的问题来解释。</p>
@@ -455,7 +456,7 @@
           
             <div class="site-state-item site-state-posts">
               <a href="/archives">
-                <span class="site-state-item-count">8</span>
+                <span class="site-state-item-count">7</span>
                 <span class="site-state-item-name">日志</span>
               </a>
             </div>

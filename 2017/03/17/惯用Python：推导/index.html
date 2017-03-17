@@ -97,7 +97,7 @@
 <meta property="og:description" content="原文：Idiomatic Python: comprehensions
 
 很幸运，我们组有几个人已经用Python编程了相当长的一段时间（我自己现在已经使用这门语言超过15年了）。随着时间的推移，我们纷纷使用各种各样Python编程中的惯用手法，这些惯用手法可能不是很明显，或者处于各种原因并未广为人知。为了帮助大家分享一些这方面的知识，我们计划进行题为“地道的Python”的不定期的博客文章，在这">
-<meta property="og:updated_time" content="2017-03-17T02:54:11.414Z">
+<meta property="og:updated_time" content="2017-03-17T03:03:27.427Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="惯用Python：推导">
 <meta name="twitter:description" content="原文：Idiomatic Python: comprehensions
@@ -320,6 +320,7 @@
         <p>原文：<a href="https://blogs.msdn.microsoft.com/pythonengineering/2016/03/14/idiomatic-python-comprehensions/" target="_blank" rel="external">Idiomatic Python: comprehensions</a></p>
 <hr>
 <p>很幸运，我们组有几个人已经用Python编程了相当长的一段时间（我自己现在已经使用这门语言超过15年了）。随着时间的推移，我们纷纷使用各种各样Python编程中的惯用手法，这些惯用手法可能不是很明显，或者处于各种原因并未广为人知。为了帮助大家分享一些这方面的知识，我们计划进行题为“地道的Python”的不定期的博客文章，在这里，我们选择一个主题，并提供关于它的一些小技巧。有些文章可能很长，有些则可能很短。无论哪种方式，我们都希望，你能从中得到一些有用的东西（即使是对于经验丰富的开发人员而言，因为我们可能会在这里那里讲到一点Python历史）。</p>
+<a id="more"></a>
 <p>对于该系列的首篇文字，我想我们可以谈谈推导。在几乎所有的编程语言中，填充一个容器的一个惯用手法就是使用<code>for</code>循环：</p>
 <figure class="highlight py"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">container = []</div><div class="line"><span class="keyword">for</span> x <span class="keyword">in</span> another_container:</div><div class="line">  container.append(x**<span class="number">2</span>)</div></pre></td></tr></table></figure>
 <p>这是用一些对象填充诸如列表的容器的一种非常简单直接的方式。但是，这种惯用手法相当常见，以至于一遍又一遍的重复变成有点讨厌。这就是为什么在Python 2.0中，<a href="https://docs.python.org/3/glossary.html#term-list-comprehension" target="_blank" rel="external">列表推导</a>被<a href="https://docs.python.org/3/whatsnew/2.0.html#list-comprehensions" target="_blank" rel="external">添加到了Python中</a>:</p>
@@ -457,7 +458,7 @@
           
             <div class="site-state-item site-state-posts">
               <a href="/archives">
-                <span class="site-state-item-count">8</span>
+                <span class="site-state-item-count">7</span>
                 <span class="site-state-item-name">日志</span>
               </a>
             </div>
