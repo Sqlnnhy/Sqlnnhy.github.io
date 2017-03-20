@@ -90,9 +90,9 @@
 <meta name="description" content="原文：Designing Pythonic APIs
 
 当编写一个包（库）的时候，为它提供一个良好的API，几乎与它的功能本身一样重要（好吧，至少你想要让别人使用），但怎么才算一个良好的API呢？在这篇文章中，我将尝试通过比较Requests和Urllib（Python标准库的一部分）在一些经典的HTTP场景的使用，从而提供关于这个问题的一些见解，并看看为什么Requests已经成为了Python">
-<meta property="og:type" content="article">
+<meta property="og:type" content="website">
 <meta property="og:title" content="设计Pythonic API">
-<meta property="og:url" content="https://lsqpyer.github.io/2017/03/17/设计Pythonic API/index.html">
+<meta property="og:url" content="https://lsqpyer.github.io/md/设计Pythonic API.html">
 <meta property="og:site_name" content="尋覓">
 <meta property="og:description" content="原文：Designing Pythonic APIs
 
@@ -130,13 +130,19 @@
 
 
 
-  <link rel="canonical" href="https://lsqpyer.github.io/2017/03/17/设计Pythonic API/"/>
+  <link rel="canonical" href="https://lsqpyer.github.io/md/设计Pythonic API.html"/>
 
 
 
 
 
-  <title> 设计Pythonic API | 尋覓 </title>
+  <title>
+  
+
+  
+    设计Pythonic API | 尋覓
+  
+</title>
 </head>
 
 <body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
@@ -161,7 +167,7 @@
     
   
 
-  <div class="container one-collumn sidebar-position-left page-post-detail ">
+  <div class="container one-collumn sidebar-position-left  ">
     <div class="headband"></div>
 
     <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
@@ -236,88 +242,17 @@
             
 
   <div id="posts" class="posts-expand">
-    
+  <header class="post-header">
 
-  
+	<h1 class="post-title" itemprop="name headline">设计Pythonic API</h1>
 
-  
-  
-  
 
-  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-    <link itemprop="mainEntityOfPage" href="https://lsqpyer.github.io/2017/03/17/设计Pythonic API/">
 
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="尋覓">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/header.bmp">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="尋覓">
-    </span>
+</header>
 
     
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-            
-            
-              
-                设计Pythonic API
-              
-            
-          </h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-03-17T10:50:15+08:00">
-                2017-03-17
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-
-          
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
     
-
-
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        <p>原文：<a href="http://noamelf.com/2016/08/05/designing-pythonic-apis/" target="_blank" rel="external">Designing Pythonic APIs</a></p>
+      <p>原文：<a href="http://noamelf.com/2016/08/05/designing-pythonic-apis/" target="_blank" rel="external">Designing Pythonic APIs</a></p>
 <hr>
 <p>当编写一个包（库）的时候，为它提供一个良好的API，几乎与它的功能本身一样重要（好吧，至少你想要让别人使用），但怎么才算一个良好的API呢？在这篇文章中，我将尝试通过比较Requests和Urllib（Python标准库的一部分）在一些经典的HTTP场景的使用，从而提供关于这个问题的一些见解，并看看为什么Requests已经成为了Python用户中的事实上的标准。</p>
 <a id="more"></a>
@@ -402,69 +337,7 @@
 <p>目前就是这样了。在准备这个演讲/文章的过程中，我学到了很多（Ele注，在翻译的时候我也学到了很多，O(∩_∩)O~），我希望你也读读它。我会很高兴在下面或者在Twitter (@noamelf)上看到你的评论（Ele注：欢迎去原文评论哈）。</p>
 <h5 id="更新-2016年8月8日"><a href="#更新-2016年8月8日" class="headerlink" title="更新 (2016年8月8日)"></a>更新 (2016年8月8日)</h5><p>如果你像许多人，包括我自己一样，最终好奇为什么在Requests和Urllib之间有如此鲜明的差异。Nick Coghlan在<a href="http://noamelf.com/2016/08/05/designing-pythonic-apis/#comment-2823855721" target="_blank" rel="external">下面的注释</a>和下面的一篇博文(标题自解释): <a href="http://www.curiousefficiency.org/posts/2016/08/what-problem-does-it-solve.html" target="_blank" rel="external">它解决了什么问题？</a>(Ele注：刚好翻译了这篇的<a href="./Requests vs. urllib：它解决了什么问题？.md">中文版</a>)中分享了它关于这个问题的广阔的视角。</p>
 
-      
-    </div>
-
-    <div>
-      
-        
-
-      
-    </div>
-
-    <div>
-      
-        
-
-      
-    </div>
-
-    <div>
-      
-        
-
-      
-    </div>
-
-    <footer class="post-footer">
-      
-
-      
-        
-      
-
-      
-        <div class="post-nav">
-          <div class="post-nav-next post-nav-item">
-            
-              <a href="/2017/03/17/你需要学习编写Python装饰器的五大理由/" rel="next" title="你需要学习编写Python装饰器的五大理由">
-                <i class="fa fa-chevron-left"></i> 你需要学习编写Python装饰器的五大理由
-              </a>
-            
-          </div>
-
-          <span class="post-nav-divider"></span>
-
-          <div class="post-nav-prev post-nav-item">
-            
-              <a href="/2017/03/17/Requests vs. urllib：它解决了什么问题？/" rel="prev" title="Requests vs. urllib：它解决了什么问题？">
-                Requests vs. urllib：它解决了什么问题？ <i class="fa fa-chevron-right"></i>
-              </a>
-            
-          </div>
-        </div>
-      
-
-      
-      
-    </footer>
-  </article>
-
-
-
-    <div class="post-spread">
-      
-    </div>
+    
   </div>
 
           
@@ -496,17 +369,8 @@
       
 
       
-        <ul class="sidebar-nav motion-element">
-          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
-            文章目录
-          </li>
-          <li class="sidebar-nav-overview" data-target="site-overview">
-            站点概览
-          </li>
-        </ul>
-      
 
-      <section class="site-overview sidebar-panel">
+      <section class="site-overview sidebar-panel sidebar-panel-active">
         <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
           <img class="site-author-image" itemprop="image"
                src="/header.bmp"
@@ -521,7 +385,7 @@
           
             <div class="site-state-item site-state-posts">
               <a href="/archives">
-                <span class="site-state-item-count">7</span>
+                <span class="site-state-item-count">1</span>
                 <span class="site-state-item-name">日志</span>
               </a>
             </div>
@@ -550,22 +414,6 @@
 
       </section>
 
-      
-      <!--noindex-->
-        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
-          <div class="post-toc">
-
-            
-              
-            
-
-            
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#requests-vs-urllib"><span class="nav-number">1.</span> <span class="nav-text">requests vs. urllib</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#用例1：发送一个GET请求"><span class="nav-number">1.1.</span> <span class="nav-text">用例1：发送一个GET请求</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#显式-API端点-优于隐式"><span class="nav-number">1.1.1.</span> <span class="nav-text">显式(API端点)优于隐式</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#有用的对象表示"><span class="nav-number">1.1.2.</span> <span class="nav-text">有用的对象表示</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#代码片段"><span class="nav-number">1.1.3.</span> <span class="nav-text">代码片段</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#用例2：获取请求状态码"><span class="nav-number">1.2.</span> <span class="nav-text">用例2：获取请求状态码</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#无需getter和setter"><span class="nav-number">1.2.1.</span> <span class="nav-text">无需getter和setter</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#代码片段-1"><span class="nav-number">1.2.2.</span> <span class="nav-text">代码片段</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#用例3：编码、发送和解码POST请求"><span class="nav-number">1.3.</span> <span class="nav-text">用例3：编码、发送和解码POST请求</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#轻松访问常用功能"><span class="nav-number">1.3.1.</span> <span class="nav-text">轻松访问常用功能</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#用例4：发送鉴权请求"><span class="nav-number">1.4.</span> <span class="nav-text">用例4：发送鉴权请求</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#为简单和高级使用提供可能性"><span class="nav-number">1.4.1.</span> <span class="nav-text">为简单和高级使用提供可能性</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#比起自己创建一个，更喜欢使用Python数据类型"><span class="nav-number">1.4.2.</span> <span class="nav-text">比起自己创建一个，更喜欢使用Python数据类型</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#库代码"><span class="nav-number">1.4.3.</span> <span class="nav-text">库代码</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#用例5：处理错误"><span class="nav-number">1.5.</span> <span class="nav-text">用例5：处理错误</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#让用户选择如何处理错误"><span class="nav-number">1.5.1.</span> <span class="nav-text">让用户选择如何处理错误</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#更新-2016年8月8日"><span class="nav-number">1.5.1.1.</span> <span class="nav-text">更新 (2016年8月8日)</span></a></li></ol></li></ol></li></ol></li></ol></div>
-            
-
-          </div>
-        </section>
-      <!--/noindex-->
       
 
       
@@ -678,10 +526,6 @@
 
 
   
-  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.0"></script>
-<script type="text/javascript" src="/js/src/post-details.js?v=5.1.0"></script>
-
-
 
   
 
